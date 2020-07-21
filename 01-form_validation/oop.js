@@ -190,7 +190,6 @@ class App extends Validator {
   }
   submitHandler = (e) => {
     e.preventDefault();
-    console.log(e);
     new User();
   };
 }
