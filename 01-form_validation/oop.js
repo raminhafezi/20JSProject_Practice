@@ -1,5 +1,6 @@
 const MIN_PASS_STRONG = 10;
 const MIN_PASS_ACCEPTABLE = 6;
+const MIN_USERNAME_LENGTH = 7;
 const HTML_ELEMENT_ID = ["username", "email", "password", "password2"];
 const checkEmailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const strongPass = new RegExp(
@@ -23,38 +24,41 @@ class Validator {
     small.innerText = message;
   };
 
-  checkRequiredHandler = (inputArray) => {
-    inputArray.forEach((input) => {
-      input.value.trim() === ""
-        ? (resultObj = {
-            type: input,
-            result: "error",
-            message: `${input.id} is required`,
-          })
-        : (resultObj = { type: input, result: "success", message: "passed" });
-      showResult`Required-check for: ${resultObj.type} res: ${resultObj.result} msg: ${resultObj.message}`;
-
-      input.id === "email" && input.value.trim() !== ""
-        ? checkEmail(input)
-        : null;
-    });
+  checkUsername = (userNameObj) => {
+    let resObj = {
+      type: userNameObj,
+      result: "",
+      message: "",
+    };
+    if (userNameObj.value.trim() === "") {
+      resObj.result = "error";
+      resObj.message = `${input.id} is required`;
+    } else if (userNameObj.value.trim().length < MIN_USERNAME_LENGTH) {
+      resObj.result = "error";
+      resObj.message = "minimum length is 7 characters";
+    } else {
+      resObj.result = "success";
+      resObj.message = "passed";
+    }
+    this
+      .showResult`Username : ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
   };
 
   checkEmailHandler = (input) => {
-    let resultObj = "";
-    checkEmailRe.test(String(input.value.trim()).toLowerCase())
-      ? (resultObj = {
-          type: input,
-          result: "success",
-          message: "Email is valid",
-        })
-      : (resultObj = {
-          type: input,
-          result: "error",
-          message: "Email is not valid",
-        });
+    let resObj = {
+      type: input,
+      result: "",
+      message: "",
+    };
+    if (checkEmailRe.test(String(input.value.trim()).toLowerCase())) {
+      resObj.result = "success";
+      resObj.message = "Email is valid";
+    } else {
+      resObj.result = "error";
+      resObj.message = "Email is not valid";
+    }
     this
-      .showResult`Email-check for: ${resultObj.type} res: ${resultObj.result} msg: ${resultObj.message}`;
+      .showResult`Email-check: ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
   };
 
   cssClassReplace = (element, newClass) => {
@@ -108,6 +112,9 @@ class Validator {
   };
 
   onlineErrorChecking = (e) => {
+    e.target.id === "username" && e.target.value.trim() !== ""
+      ? this.checkUsername(e.target)
+      : null;
     e.target.id === "email" && e.target.value.trim() !== ""
       ? this.checkEmailHandler(e.target)
       : null;
