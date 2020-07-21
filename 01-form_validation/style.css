@@ -5,6 +5,7 @@
 
 :root {
   --success-color: hsla(145, 63%, 49%, 1);
+  --small-success-color: rgb(39, 116, 71);
   --medium-color: hsla(145, 63%, 49%, 0.3);
   --error-color: hsla(6, 78%, 57%, 1);
 }
@@ -69,16 +70,19 @@ h2 {
 }
 
 .form-control small {
-  color: var(--error-color);
   position: absolute;
+  color: lightgray;
   bottom: 0;
-  left: 0;\
-  visibility: hidden;
+  left: 0;
 }
 
 .form-control.error small {
-  visibility: visible;
+  color: var(--error-color);
   text-transform: capitalize;
+}
+
+.form-control.success small {
+  color: var(--small-success-color);
 }
 
 .password-strong {

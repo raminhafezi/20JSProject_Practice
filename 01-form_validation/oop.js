@@ -1,6 +1,21 @@
 const MIN_PASS_STRONG = 10;
 const MIN_PASS_ACCEPTABLE = 6;
 const MIN_USERNAME_LENGTH = 7;
+
+const SUCCESS = "success";
+const ERROR = "error";
+
+const PASSWORD_CHECK_ERROR_MSG = "use more than 10 chars include !@#$%^&*";
+const PASSWORD_CHECK_SUCCESS_MSG = "password check passed";
+const PASSWORD_LENGTH_ERROR_MSG = "password length < 10";
+const USERNAME_MIN_LENGTH_MSG = `minimum length is ${MIN_USERNAME_LENGTH} chars`;
+const PASSWORD_MATCH_ERROR_MSG = "passwords does not match";
+const PASSWORD_MATCH_SUCCESS_MSG = "passwords match";
+const EMAIL_CHECK_ERROR_MSG = "Email is not valid";
+const EMAIL_CHECK_PASS_MSG = "Email check passed";
+const USERNAME_CHECK_ERROR_MSG = "not in a valid format";
+const USERNAME_CHECK_PASS_MSG = "username check passed";
+
 const HTML_ELEMENT_ID = ["username", "email", "password", "password2"];
 const usernameRe = /^[a-zA-Z][a-zA-Z0-9]+$/;
 const checkEmailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -17,7 +32,7 @@ class Validator {
     const parent = input.parentElement;
     const small = input.nextElementSibling;
 
-    if (errorOrSsuccess === "success") {
+    if (errorOrSsuccess === SUCCESS) {
       parent.className = "form-control success";
       small.innerText = message;
       return;
@@ -34,14 +49,14 @@ class Validator {
       message: "",
     };
     if (uName === "" || uName.length < MIN_USERNAME_LENGTH) {
-      resObj.result = "error";
-      resObj.message = "minimum length is 7 chars";
+      resObj.result = ERROR;
+      resObj.message = USERNAME_MIN_LENGTH_MSG;
     } else if (usernameRe.test(String(userNameObj.value))) {
-      resObj.result = "success";
-      resObj.message = "passed";
+      resObj.result = SUCCESS;
+      resObj.message = USERNAME_CHECK_PASS_MSG;
     } else {
-      resObj.result = "error";
-      resObj.message = "not in a valid format";
+      resObj.result = ERROR;
+      resObj.message = USERNAME_CHECK_ERROR_MSG;
     }
     this
       .updateHints`Username : ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
@@ -54,11 +69,11 @@ class Validator {
       message: "",
     };
     if (checkEmailRe.test(String(input.value.trim()).toLowerCase())) {
-      resObj.result = "success";
-      resObj.message = "Email is valid";
+      resObj.result = SUCCESS;
+      resObj.message = EMAIL_CHECK_PASS_MSG;
     } else {
-      resObj.result = "error";
-      resObj.message = "Email is not valid";
+      resObj.result = ERROR;
+      resObj.message = EMAIL_CHECK_ERROR_MSG;
     }
     this
       .updateHints`Email-check: ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
@@ -80,17 +95,17 @@ class Validator {
 
     if (strongPass.test(password.value)) {
       this.cssClassReplace(password, "password-strong");
-      resObj.result = "success";
-      resObj.message = "Password Check passed";
+      resObj.result = SUCCESS;
+      resObj.message = PASSWORD_CHECK_SUCCESS_MSG;
     } else {
       if (mediumPass.test(password.value)) {
         this.cssClassReplace(password, "password-medium");
         this.cssClassReplace(password, "password-weak");
-        resObj.result = "error";
-        resObj.message = "password length < 10";
+        resObj.result = ERROR;
+        resObj.message = PASSWORD_LENGTH_ERROR_MSG;
       } else {
-        resObj.result = "error";
-        resObj.message = "password is weak or not in correct foramt";
+        resObj.result = ERROR;
+        resObj.message = PASSWORD_CHECK_ERROR_MSG;
       }
     }
     this
@@ -107,12 +122,12 @@ class Validator {
 
     if (password2.value === password.value) {
       this.cssClassReplace(password2, "password-strong");
-      resObj.result = "success";
-      resObj.message = "passwords match";
+      resObj.result = SUCCESS;
+      resObj.message = PASSWORD_MATCH_SUCCESS_MSG;
     } else {
       this.cssClassReplace(password2, "password-weak");
-      resObj.result = "error";
-      resObj.message = "passwords does not match";
+      resObj.result = ERROR;
+      resObj.message = PASSWORD_MATCH_ERROR_MSG;
     }
     this
       .updateHints`Passwords check: ${resObj.type} res: ${resObj.result}  msg: ${resObj.message}`;
@@ -120,17 +135,17 @@ class Validator {
 
   //  switch case to call checkers
   onlineErrorChecking = (e) => {
-    e.target.id === "username" && e.target.value.trim() !== ""
+    e.target.id === "username" //&& e.target.value.trim() !== ""
       ? this.checkUsername(e.target)
       : null;
-    e.target.id === "email" && e.target.value.trim() !== ""
+    e.target.id === "email" //&& e.target.value.trim() !== ""
       ? this.checkEmailHandler(e.target)
       : null;
-    e.target.id === "password" && e.target.value.trim() !== ""
+    e.target.id === "password" //&& e.target.value.trim() !== ""
       ? this.passPowerCheck(e.target)
       : null;
 
-    e.target.id === "password2" && e.target.value.trim() !== ""
+    e.target.id === "password2" //&& e.target.value.trim() !== ""
       ? this.passConfirmationHandler(e.target)
       : null;
   };
