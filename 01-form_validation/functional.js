@@ -120,7 +120,7 @@ function passPowerCheck() {
     message: "",
   };
 
-  strongPassswordPass = (hintObj) => {
+  strongPasswordPass = (hintObj) => {
     cssClassReplace(hintObj.type, "password-strong");
     hintObj.result = SUCCESS;
     hintObj.message = PASSWORD_CHECK_SUCCESS_MSG;
@@ -142,7 +142,7 @@ function passPowerCheck() {
   };
 
   strongPass.test(password.value)
-    ? (hintObj = strongPassswordPass(hintObj))
+    ? (hintObj = strongPasswordPass(hintObj))
     : mediumPass.test(password.value)
     ? (hintObj = mediumPasswordPass(hintObj))
     : (hintObj = passwordCheckFail(hintObj));
