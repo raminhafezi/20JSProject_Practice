@@ -2,6 +2,7 @@ const MIN_PASS_STRONG = 10;
 const MIN_PASS_ACCEPTABLE = 6;
 const MIN_USERNAME_LENGTH = 7;
 const HTML_ELEMENT_ID = ["username", "email", "password", "password2"];
+const usernameRe = /^[a-zA-Z][a-zA-Z0-9]+$/;
 const checkEmailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const strongPass = new RegExp(
   `^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{${MIN_PASS_STRONG},})`
@@ -11,7 +12,8 @@ const mediumPass = new RegExp(
 );
 
 class Validator {
-  showResult = (_, input, errorOrSsuccess, message) => {
+  // update hint fields under each input elements
+  updateHints = (_, input, errorOrSsuccess, message) => {
     const parent = input.parentElement;
     const small = input.nextElementSibling;
 
@@ -23,27 +25,28 @@ class Validator {
     parent.className = "form-control error";
     small.innerText = message;
   };
-
+  // username must be above 6 chars and not empty
   checkUsername = (userNameObj) => {
+    const uName = userNameObj.value.trim();
     let resObj = {
       type: userNameObj,
       result: "",
       message: "",
     };
-    if (userNameObj.value.trim() === "") {
+    if (uName === "" || uName.length < MIN_USERNAME_LENGTH) {
       resObj.result = "error";
-      resObj.message = `${input.id} is required`;
-    } else if (userNameObj.value.trim().length < MIN_USERNAME_LENGTH) {
-      resObj.result = "error";
-      resObj.message = "minimum length is 7 characters";
-    } else {
+      resObj.message = "minimum length is 7 chars";
+    } else if (usernameRe.test(String(userNameObj.value))) {
       resObj.result = "success";
       resObj.message = "passed";
+    } else {
+      resObj.result = "error";
+      resObj.message = "not in a valid format";
     }
     this
-      .showResult`Username : ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
+      .updateHints`Username : ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
   };
-
+  // check email format based on RE
   checkEmailHandler = (input) => {
     let resObj = {
       type: input,
@@ -58,13 +61,16 @@ class Validator {
       resObj.message = "Email is not valid";
     }
     this
-      .showResult`Email-check: ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
+      .updateHints`Email-check: ${resObj.type} res: ${resObj.result} msg: ${resObj.message}`;
   };
 
+  // chane CSS color and show error hints
   cssClassReplace = (element, newClass) => {
     element.classList = "";
     element.classList.add(newClass);
   };
+
+  // check password length, and strength based on defined REs
   passPowerCheck = () => {
     let resObj = {
       type: password,
@@ -88,9 +94,10 @@ class Validator {
       }
     }
     this
-      .showResult`Password validation: ${resObj.type} res: ${resObj.result}  msg : ${resObj.message}`;
+      .updateHints`Password validation: ${resObj.type} res: ${resObj.result}  msg : ${resObj.message}`;
   };
 
+  // check if confirmation pass-phrase passed
   passConfirmationHandler = () => {
     let resObj = {
       type: password2,
@@ -108,9 +115,10 @@ class Validator {
       resObj.message = "passwords does not match";
     }
     this
-      .showResult`Passwords check: ${resObj.type} res: ${resObj.result}  msg: ${resObj.message}`;
+      .updateHints`Passwords check: ${resObj.type} res: ${resObj.result}  msg: ${resObj.message}`;
   };
 
+  //  switch case to call checkers
   onlineErrorChecking = (e) => {
     e.target.id === "username" && e.target.value.trim() !== ""
       ? this.checkUsername(e.target)
@@ -125,12 +133,6 @@ class Validator {
     e.target.id === "password2" && e.target.value.trim() !== ""
       ? this.passConfirmationHandler(e.target)
       : null;
-
-    let elementId = HTML_ELEMENT_ID.indexOf(e.target.id);
-    elementId < 0 ? null : {};
-    const typedValue = e.target.value;
-    let textArea = e.target.nextSibling.nodeValue;
-    // console.warn(e.target.id);
   };
 }
 
@@ -182,7 +184,6 @@ class App extends Validator {
     super();
     this.form = document.getElementById("form");
     this.form.oninput = (e) => {
-      //   console.log((e.target.nextSibling.nodeValue ));
       this.onlineErrorChecking(e);
     };
     this.form.addEventListener("submit", this.submitHandler.bind(this));
