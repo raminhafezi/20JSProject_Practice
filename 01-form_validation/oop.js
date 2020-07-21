@@ -136,40 +136,8 @@ class Validator {
   };
 }
 
-class Form extends Validator {
+class User {
   constructor() {
-    super();
-    this.username = document.getElementById("username");
-    this.email = document.getElementById("email");
-    this.password = document.getElementById("password");
-    this.password2 = document.getElementById("password2");
-    this.data = {
-      username: this.username.value,
-      email: this.email.value,
-      password: this.password.value,
-      password2: this.password2.value,
-    };
-
-    this.password.addEventListener(
-      "input",
-      Validator.passPowerCheck.bind(this.password)
-    );
-
-    this.password2.addEventListener(
-      "input",
-      Validator.passConfHandler.bind(this.password2)
-    );
-  }
-
-  static cssClassReplace = (element, newClass) => {
-    element.classList = "";
-    element.classList.add(newClass);
-  };
-}
-
-class User extends Form {
-  constructor() {
-    super();
     console.log(this.data);
   }
   static greeting = () => {
