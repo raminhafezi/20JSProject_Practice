@@ -26,3 +26,17 @@ if you want to rename two or more instances at the same time,
 
 
 
+Proejct 2:
+================= Movie Ticket select Wwbsite
+
+=== Local Storage
+
+to save in local storage:
+    - localStorage.setItem('item_name_in_steing', itemValue_in_string_or_JSON.stringfy())
+
+
+to load from local storage:
+    - localStorage.getItem('item_name_in_steing') or 
+        JSON.pars(localStorage.getItem('item_name_in_steing'))
+
+        
