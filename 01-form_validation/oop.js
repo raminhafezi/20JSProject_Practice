@@ -174,7 +174,7 @@ class User extends Form {
   }
   static greeting = () => {
     console.log(
-      `Hellow Mr/Mrs ${this.data.sername}, I've got your email as ${this.data.email}, please keep your credential ${this.data.password} on a safe place.`
+      `Hello Mr/Mrs ${this.data.sername}, I've got your email as ${this.data.email}, please keep your credential ${this.data.password} on a safe place.`
     );
   };
 }
