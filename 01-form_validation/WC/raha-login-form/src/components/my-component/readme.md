@@ -1,4 +1,4 @@
-# my-component
+# raha-login-form
 
 <!-- Auto Generated Below -->
 
@@ -16,6 +16,10 @@
 | `mediumPass`        | `mediumPass`        | Boolean Flag                                         | Boolean | false              |
 | `minPassLength`     | `minPassLength`     | 6 chars                                              | number  | 6                  |
 | `strongPassLegth`   | `strongPassLegth`   | 10 chars include !@#\$%^&\*(), numbers and smal-Capt | number  | 10                 |
+| `checkEmailRe`      | `checkEmailRe`      | Re to check email format                             | RE      | check global.js    |
+| `usernameRe`        | `usernameRe`        | Re to check user name format                         | RE      | check global.js    |
+| `mediumPassRe`      | `mediumPassRe`      | Re to check password format with minPassLength       | RE      | check global.js    |
+| `strongPassRe`      | `strongPassRe`      | Re to check password format with strongPassLength    | RE      | check global.js    |
 
 ---
 
