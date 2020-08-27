@@ -1,5 +1,5 @@
 import { Component, h, State, Prop } from '@stencil/core';
-import { MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_ACCEPTABLE, CHECK_EMAIL_RE, STRONG_PASS, MEDIUM_PASS, MSG } from '../../global/global';
+import { FORM_TITLE, MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_ACCEPTABLE, CHECK_EMAIL_RE, STRONG_PASS, MEDIUM_PASS, MSG } from '../../global/global';
 
 @Component({
   tag: 'raha-login-form',
@@ -7,7 +7,7 @@ import { MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_ACCEPTABLE, CH
   shadow: true,
 })
 export class MyComponent {
-  @Prop({ reflectToAttr: true, mutable: true }) formTitle: String = 'Register with Us';
+  @Prop({ reflectToAttr: true, mutable: true }) formTitle: String = FORM_TITLE;
   @State()
   usernameRe: RegExp = USERNAME;
   @State() usernameIsValid: boolean = false;

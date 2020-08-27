@@ -1,3 +1,4 @@
+export const FORM_TITLE = 'Register With Us';
 export const MIN_USERNAME_LENGTH = 5;
 export const MIN_PASS_STRONG = 10;
 export const MIN_PASS_ACCEPTABLE = 6;
