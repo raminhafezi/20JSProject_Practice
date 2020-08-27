@@ -1,4 +1,4 @@
-import { Component, h, State, Prop } from '@stencil/core';
+import { Component, h, State, Prop, Watch } from '@stencil/core';
 import { FORM_TITLE, MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_ACCEPTABLE, CHECK_EMAIL_RE, STRONG_PASS, MEDIUM_PASS, MSG } from '../../global/global';
 
 @Component({
@@ -8,15 +8,17 @@ import { FORM_TITLE, MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_AC
 })
 export class MyComponent {
   @Prop({ reflectToAttr: true, mutable: true }) formTitle: String = FORM_TITLE;
-  @State()
-  usernameRe: RegExp = USERNAME;
+
+  @State() usernameRe: RegExp = USERNAME;
   @State() usernameIsValid: boolean = false;
-  @Prop({ reflectToAttr: true, mutable: true }) minUsernameLength: number = MIN_USERNAME_LENGTH;
+  @Prop() minUsernameLength: number = MIN_USERNAME_LENGTH;
   username: HTMLInputElement;
+  @Prop() userNameValue: string = null;
 
   @State() checkEmailRe: RegExp = CHECK_EMAIL_RE;
   @Prop({ reflectToAttr: true, mutable: true }) emailIsValid: boolean = false;
   email: HTMLInputElement;
+  @Prop() emailValue: string = null;
 
   @State() mediumPassRe: RegExp = MEDIUM_PASS;
   @State() passwordIsValid: boolean = false;
@@ -30,14 +32,23 @@ export class MyComponent {
   password2: HTMLInputElement;
   @Prop({ reflectToAttr: true, mutable: true }) submitBtn: HTMLElement;
 
-  usernameLengthCheck() {
+  usernameValidationHandler() {
+    this.userNameValue = this.username.value;
+  }
+
+  emailValidationHandler() {
+    this.emailValue = this.email.value.trim().toLowerCase();
+  }
+
+  @Watch('userNameValue')
+  onUsernameValueChanges() {
     let classList = null;
     let msg = null;
-    if (this.username.value === '' || +this.username.value.length < MIN_USERNAME_LENGTH) {
+    if (this.userNameValue === '' || +this.userNameValue.length < MIN_USERNAME_LENGTH) {
       classList = { success: false, error: true };
       this.usernameIsValid = false;
       msg = MSG['USERNAME_MIN_LENGTH_MSG'];
-    } else if (this.usernameRe.test(String(this.username.value))) {
+    } else if (this.usernameRe.test(String(this.userNameValue))) {
       classList = { success: true, error: false };
       this.usernameIsValid = true;
       msg = MSG['USERNAME_CHECK_PASS_MSG'];
@@ -50,9 +61,10 @@ export class MyComponent {
   }
 
   // check Email with imported RE and change CSS Style and hint accordingly
+  @Watch('emailValue')
   emailValidation() {
     let classList = null;
-    if (this.checkEmailRe.test(this.email.value.trim().toLocaleLowerCase())) {
+    if (this.checkEmailRe.test(this.emailValue)) {
       this.emailIsValid = true;
       classList = { success: true, error: false };
       this.toggleCssClassAndHint(this.email, classList, MSG['EMAIL_CHECK_PASS_MSG']);
@@ -115,13 +127,9 @@ export class MyComponent {
   }
 
   submitform() {
-    // event.preventDefault();
-    // console.log('mouse enter button area');
     if (this.usernameIsValid && this.emailIsValid && this.passwordIsValid && this.passwordsMatch) {
-      console.log('remove disabled');
       this.submitBtn.removeAttribute('disabled');
     } else {
-      console.log('add disbaled');
       this.submitBtn.setAttribute('disabled', '');
     }
   }
@@ -137,12 +145,12 @@ export class MyComponent {
           <h2>{this.formTitle}</h2>
           <div class="form-control">
             <label id="username">Username</label>
-            <input id="username" type="text" class="username" placeholder="Enter Username" ref={el => (this.username = el)} onInput={this.usernameLengthCheck.bind(this)} />
+            <input id="username" type="text" class="username" placeholder="Enter Username" ref={el => (this.username = el)} onInput={this.usernameValidationHandler.bind(this)} />
             <small>hint</small>
           </div>
           <div class="form-control">
             <label id="Email">Email</label>
-            <input id="email" type="text" class={{ email: true }} placeholder="Enter Email" ref={el => (this.email = el)} onInput={this.emailValidation.bind(this)} />
+            <input id="email" type="text" class={{ email: true }} placeholder="Enter Email" ref={el => (this.email = el)} onInput={this.emailValidationHandler.bind(this)} />
             <small>hint</small>
           </div>
           <div class="form-control">

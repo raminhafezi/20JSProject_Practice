@@ -4,23 +4,26 @@
 
 ## Properties
 
-| Property            | Attribute           | Description                                          | Type    | Default            |
-| ------------------- | ------------------- | ---------------------------------------------------- | ------- | ------------------ |
-| `formTitle`         | `formTitle`         | Form Title                                           | string  | `Register Wtih Us` |
-| `minUsernameLength` | `minUsernameLength` | minimum acceptable user name                         | number  | 5                  |
-| `usernameIsValid`   | `usernameIsValid`   | Boolean Flag                                         | Boolean | false              |
-| `emailIsValid`      | `emailIsValid`      | Boolean Flag                                         | Boolean | false              |
-| `passwordIsValid`   | `passwordIsValid`   | Boolean Flag                                         | Boolean | false              |
-| `passwordsMatch`    | `passwordsMatch`    | Boolean Flag                                         | Boolean | false              |
-| `strongPass`        | `strongPass`        | Boolean Flag                                         | Boolean | false              |
-| `mediumPass`        | `mediumPass`        | Boolean Flag                                         | Boolean | false              |
-| `minPassLength`     | `minPassLength`     | 6 chars                                              | number  | 6                  |
-| `strongPassLegth`   | `strongPassLegth`   | 10 chars include !@#\$%^&\*(), numbers and smal-Capt | number  | 10                 |
-| `checkEmailRe`      | `checkEmailRe`      | Re to check email format                             | RE      | check global.js    |
-| `usernameRe`        | `usernameRe`        | Re to check user name format                         | RE      | check global.js    |
-| `mediumPassRe`      | `mediumPassRe`      | Re to check password format with minPassLength       | RE      | check global.js    |
-| `strongPassRe`      | `strongPassRe`      | Re to check password format with strongPassLength    | RE      | check global.js    |
+| Property            | Attribute             | Description | Type          | Default               |
+| ------------------- | --------------------- | ----------- | ------------- | --------------------- |
+| `emailIsValid`      | `email-is-valid`      |             | `boolean`     | `false`               |
+| `emailValue`        | `email-value`         |             | `string`      | `null`                |
+| `formTitle`         | --                    |             | `String`      | `FORM_TITLE`          |
+| `mediumPass`        | `medium-pass`         |             | `boolean`     | `false`               |
+| `minPassLength`     | `min-pass-length`     |             | `number`      | `MIN_PASS_ACCEPTABLE` |
+| `minUsernameLength` | `min-username-length` |             | `number`      | `MIN_USERNAME_LENGTH` |
+| `passwordsMatch`    | `passwords-match`     |             | `boolean`     | `false`               |
+| `strongPass`        | `strong-pass`         |             | `boolean`     | `false`               |
+| `strongPassLegth`   | `strong-pass-legth`   |             | `number`      | `MIN_PASS_STRONG`     |
+| `submitBtn`         | --                    |             | `HTMLElement` | `undefined`           |
+| `userNameValue`     | `user-name-value`     |             | `string`      | `null`                |
 
 ---
 
 _Built with [StencilJS](https://stenciljs.com/)_
+
+How to use this Web Component
+
+    1- copy-paste all of the "dist" folder into your proejct
+    2- <script ref="....... to your what ever you select for namespace value in stencil.config.ts "
+    3- use your component in index.html file, <raha-login-form> </raha-login-form> or ....

@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface RahaLoginForm {
         "emailIsValid": boolean;
+        "emailValue": string;
         "formTitle": String;
         "mediumPass": boolean;
         "minPassLength": number;
@@ -16,6 +17,7 @@ export namespace Components {
         "strongPass": boolean;
         "strongPassLegth": number;
         "submitBtn": HTMLElement;
+        "userNameValue": string;
     }
 }
 declare global {
@@ -32,6 +34,7 @@ declare global {
 declare namespace LocalJSX {
     interface RahaLoginForm {
         "emailIsValid"?: boolean;
+        "emailValue"?: string;
         "formTitle"?: String;
         "mediumPass"?: boolean;
         "minPassLength"?: number;
@@ -40,6 +43,7 @@ declare namespace LocalJSX {
         "strongPass"?: boolean;
         "strongPassLegth"?: number;
         "submitBtn"?: HTMLElement;
+        "userNameValue"?: string;
     }
     interface IntrinsicElements {
         "raha-login-form": RahaLoginForm;
