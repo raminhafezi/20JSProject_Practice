@@ -26,6 +26,7 @@ _Built with [StencilJS](https://stenciljs.com/)_
 
 How to use this Web Component
 
-    1- copy-paste all of the "dist" folder into your proejct
-    2- <script ref="....... to your what ever you select for namespace value in stencil.config.ts "
+    1- copy-paste all of the "dist" folder into your project (Vanila, React, Angular, Vue, ...).
+    2- <script ref="....... /> "
     3- use your component in index.html file, <raha-login-form> </raha-login-form> or ....
+    4- customize it with global.js, check variables in .css and use above properties.

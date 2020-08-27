@@ -1,4 +1,4 @@
-import { Component, h, State, Prop, Watch } from '@stencil/core';
+import { Component, h, State, Prop, Watch, EventEmitter, Event } from '@stencil/core';
 import { FORM_TITLE, MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_ACCEPTABLE, CHECK_EMAIL_RE, STRONG_PASS, MEDIUM_PASS, MSG } from '../../global/global';
 
 @Component({
@@ -9,28 +9,33 @@ import { FORM_TITLE, MIN_USERNAME_LENGTH, USERNAME, MIN_PASS_STRONG, MIN_PASS_AC
 export class MyComponent {
   @Prop({ reflectToAttr: true, mutable: true }) formTitle: String = FORM_TITLE;
 
-  @State() usernameRe: RegExp = USERNAME;
-  @State() usernameIsValid: boolean = false;
-  @Prop() minUsernameLength: number = MIN_USERNAME_LENGTH;
   username: HTMLInputElement;
   @Prop() userNameValue: string = null;
+  @State() usernameIsValid: boolean = false;
+  @State() usernameRe: RegExp = USERNAME;
+  @Prop() minUsernameLength: number = MIN_USERNAME_LENGTH;
 
-  @State() checkEmailRe: RegExp = CHECK_EMAIL_RE;
-  @Prop({ reflectToAttr: true, mutable: true }) emailIsValid: boolean = false;
   email: HTMLInputElement;
   @Prop() emailValue: string = null;
+  @State() checkEmailRe: RegExp = CHECK_EMAIL_RE;
+  @Prop({ reflectToAttr: true, mutable: true }) emailIsValid: boolean = false;
 
-  @State() mediumPassRe: RegExp = MEDIUM_PASS;
-  @State() passwordIsValid: boolean = false;
-  @Prop({ reflectToAttr: true, mutable: true }) passwordsMatch: boolean = false;
-  @Prop({ reflectToAttr: true, mutable: true }) strongPass: boolean = false;
-  @State() strongPassRe: RegExp = STRONG_PASS;
-  @Prop({ reflectToAttr: true, mutable: true }) mediumPass: boolean = false;
-  @Prop() minPassLength: number = MIN_PASS_ACCEPTABLE;
-  @Prop() strongPassLegth: number = MIN_PASS_STRONG;
   password: HTMLInputElement;
   password2: HTMLInputElement;
+  @Prop() passwordValue: string = null;
+  @Prop() password2Value: string = null;
+  @State() mediumPassRe: RegExp = MEDIUM_PASS;
+  @State() strongPassRe: RegExp = STRONG_PASS;
+  @State() passwordIsValid: boolean = false;
+  @Prop() minPassLength: number = MIN_PASS_ACCEPTABLE;
+  @Prop() strongPassLegth: number = MIN_PASS_STRONG;
+  @Prop({ reflectToAttr: true, mutable: true }) passwordsMatch: boolean = false;
+  @Prop({ reflectToAttr: true, mutable: true }) strongPass: boolean = false;
+  @Prop({ reflectToAttr: true, mutable: true }) mediumPass: boolean = false;
+
   @Prop({ reflectToAttr: true, mutable: true }) submitBtn: HTMLElement;
+
+  @Event({ bubbles: true, composed: true }) rahaLoginEvent: EventEmitter;
 
   usernameValidationHandler() {
     this.userNameValue = this.username.value;
@@ -38,6 +43,13 @@ export class MyComponent {
 
   emailValidationHandler() {
     this.emailValue = this.email.value.trim().toLowerCase();
+  }
+
+  passwordValidatorHandler() {
+    this.passwordValue = this.password.value;
+  }
+  passwordsMatchHandler() {
+    this.password2Value = this.password2.value;
   }
 
   @Watch('userNameValue')
@@ -75,17 +87,18 @@ export class MyComponent {
     }
   }
 
+  @Watch('passwordValue')
   passPowHandler() {
     let classList,
       msg = null;
 
-    if (this.strongPassRe.test(this.password.value.trim())) {
+    if (this.strongPassRe.test(this.passwordValue.trim())) {
       classList = { 'success': true, 'error': false, 'password-strong': true, 'password-medium': false };
       this.strongPass = true;
       this.passwordIsValid = true;
       msg = MSG['PASSWORD_CHECK_SUCCESS_MSG'];
     } else {
-      if (this.mediumPassRe.test(this.password.value.trim())) {
+      if (this.mediumPassRe.test(this.passwordValue.trim())) {
         classList = { 'error': true, 'success': false, 'password-strong': false, 'password-medium': true };
         this.mediumPass = true;
         this.strongPass = false;
@@ -99,13 +112,15 @@ export class MyComponent {
       }
     }
     this.toggleCssClassAndHint(this.password, classList, msg);
+    this.passConfirmationHandler();
   }
 
+  @Watch('password2Value')
   passConfirmationHandler() {
     let classList,
       msg = null;
 
-    if (this.password.value === this.password2.value) {
+    if (this.passwordValue === this.password2Value) {
       classList = { success: true, error: false };
       msg = MSG['PASSWORD_MATCH_SUCCESS_MSG'];
       this.passwordsMatch = true;
@@ -136,6 +151,9 @@ export class MyComponent {
 
   formSublit(event: Event) {
     event.preventDefault();
+    let loginObject = { username: this.userNameValue, email: this.emailValue, password: this.passwordValue };
+    // console.log('Clicked!!!!');
+    this.rahaLoginEvent.emit(loginObject);
   }
 
   render() {
@@ -163,7 +181,7 @@ export class MyComponent {
               ref={el => {
                 this.password = el;
               }}
-              onInput={this.passPowHandler.bind(this)}
+              onInput={this.passwordValidatorHandler.bind(this)}
             />
             <small>hint</small>
           </div>
@@ -177,7 +195,7 @@ export class MyComponent {
               ref={el => {
                 this.password2 = el;
               }}
-              onInput={this.passConfirmationHandler.bind(this)}
+              onInput={this.passwordsMatchHandler.bind(this)}
             />
             <small>hint</small>
           </div>

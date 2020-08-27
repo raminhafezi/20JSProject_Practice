@@ -13,6 +13,8 @@ export namespace Components {
         "mediumPass": boolean;
         "minPassLength": number;
         "minUsernameLength": number;
+        "password2Value": string;
+        "passwordValue": string;
         "passwordsMatch": boolean;
         "strongPass": boolean;
         "strongPassLegth": number;
@@ -39,6 +41,9 @@ declare namespace LocalJSX {
         "mediumPass"?: boolean;
         "minPassLength"?: number;
         "minUsernameLength"?: number;
+        "onRahaLoginEvent"?: (event: CustomEvent<any>) => void;
+        "password2Value"?: string;
+        "passwordValue"?: string;
         "passwordsMatch"?: boolean;
         "strongPass"?: boolean;
         "strongPassLegth"?: number;

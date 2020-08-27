@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property            | Attribute             | Description | Type          | Default               |
@@ -12,18 +13,22 @@
 | `mediumPass`        | `medium-pass`         |             | `boolean`     | `false`               |
 | `minPassLength`     | `min-pass-length`     |             | `number`      | `MIN_PASS_ACCEPTABLE` |
 | `minUsernameLength` | `min-username-length` |             | `number`      | `MIN_USERNAME_LENGTH` |
+| `password2Value`    | `password-2-value`    |             | `string`      | `null`                |
+| `passwordValue`     | `password-value`      |             | `string`      | `null`                |
 | `passwordsMatch`    | `passwords-match`     |             | `boolean`     | `false`               |
 | `strongPass`        | `strong-pass`         |             | `boolean`     | `false`               |
 | `strongPassLegth`   | `strong-pass-legth`   |             | `number`      | `MIN_PASS_STRONG`     |
 | `submitBtn`         | --                    |             | `HTMLElement` | `undefined`           |
 | `userNameValue`     | `user-name-value`     |             | `string`      | `null`                |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+## Events
 
-How to use this Web Component
+| Event            | Description | Type               |
+| ---------------- | ----------- | ------------------ |
+| `rahaLoginEvent` |             | `CustomEvent<any>` |
 
-    1- copy-paste all of the "dist" folder into your proejct
-    2- <script ref="....... to your what ever you select for namespace value in stencil.config.ts "
-    3- use your component in index.html file, <raha-login-form> </raha-login-form> or ....
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
