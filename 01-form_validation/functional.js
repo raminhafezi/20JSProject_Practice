@@ -188,7 +188,7 @@ function oninputHandler(e) {
     ? passConfirmationHandler(focusEl)
     : null;
 }
-
+//final function
 function onlineCheck(elementId, eventHandler) {
   const form = getUserInput(elementId);
   form.oninput = (e) => {
