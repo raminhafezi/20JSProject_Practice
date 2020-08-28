@@ -123,4 +123,5 @@ p.text span {
   border-left: 1px solid red;
   list-style-type: none;
   padding: 8px 0px;
+  padding-left: 10px;
 }
