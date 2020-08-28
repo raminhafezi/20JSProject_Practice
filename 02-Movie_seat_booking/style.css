@@ -93,10 +93,10 @@ body {
 
 .screen {
   background: white;
-  height: 70px;
+  height: 170px;
   width: 100%;
   margin: 15px 0;
-  transform: rotateX(-40deg);
+  transform: rotateX(-60deg);
   box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 }
 
@@ -110,4 +110,17 @@ p.text span {
 
 .row {
   display: flex;
+}
+
+.ticketsSummary {
+  margin-top: 2px;
+  padding: 2px 10px;
+  transform: rotateX(-30deg);
+}
+
+.screen li {
+  color: black;
+  border-left: 1px solid red;
+  list-style-type: none;
+  padding: 8px 0px;
 }
