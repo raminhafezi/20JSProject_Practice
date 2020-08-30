@@ -37,10 +37,10 @@ const seatSelectHandler = (event) => {
   updateSelectedCount();
 };
 
-// Save selected seat on localStorage,
+// Get Booked seat index file, save currentState on localStorage
+// Calculate Rcceipt
 const updateSelectedCount = () => {
   const bookedSeat = document.querySelectorAll(".row .seat.booked");
-  const selectedSeatsCount = +bookedSeat.length;
 
   //Save booked seat into the currentSeatStatus
   const seatIndex = [...bookedSeat].map((seat) => [...allSeats].indexOf(seat));
@@ -49,15 +49,15 @@ const updateSelectedCount = () => {
   //saved on the localStorage
   localStorage.setItem("currentSeatStatus", JSON.stringify(currentSeatStatus));
 
-  //update booked property of the selected movie in currentSeatStatus
   calculateReceipt();
 };
 
 const calculateReceipt = () => {
-  //final HTML lookalike string passed for display on the screendisplayed in the screen
+  //<li> movie name, ticket Qty and cost </li>
+  //at the end <li> Total Cost XXX $ </li>
   let receiptText = null;
 
-  //generate each line on the receipt based on booked ticker for each movie unequal to 0, generate an <li> for each movie
+  //generate each line on the receipt based on currentSeatState.movieIndex.booked if length > 0, generate an <li> for each movie.
   currentSeatStatus.forEach((movie) => {
     if (movie.booked.length > 0) {
       receiptText += `<li> <strong>${movie.name} </strong>${
@@ -99,15 +99,9 @@ const displayOnScreen = (text) => {
 
 const changeMovieHandler = (event) => {
   ticketPrice = +event.target.value;
-  updateSeats();
-  updateSelectedCount();
-};
-
-const updateSeats = () => {
-  //movieSelect.selectedIndex return selected movie index
-
   movieIndex = movieSelect.selectedIndex;
   updateUI();
+  updateSelectedCount();
 };
 
 //change CSS class of the reseved seat, based on the selected movie
@@ -138,4 +132,4 @@ container.addEventListener("click", seatSelectHandler);
 
 //movie select event
 movieSelect.addEventListener("change", changeMovieHandler.bind(event));
-document.addEventListener("onload", updateSeats());
+document.addEventListener("onload", updateUI());
