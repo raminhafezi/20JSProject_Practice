@@ -1,6 +1,5 @@
 const container = document.querySelector(".container");
 const allSeats = document.querySelectorAll(".row .seat");
-const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
 let ticketPrice = +movieSelect.value;
@@ -23,54 +22,6 @@ let currentSeatStatus = [
   },
 ];
 
-// save selected movie index on DropDown for page reload.
-const setMovieData = (movieIndex, moviePrice) => {
-  localStorage.setItem("selectedMovieIndex", movieIndex);
-};
-
-// Save selected seat on localStorage,
-const updateSelectedCount = () => {
-  const bookedSeat = document.querySelectorAll(".row .seat.booked");
-  const selectedSeatsCount = +bookedSeat.length;
-  count.innerText = selectedSeatsCount;
-  total.innerText = +selectedSeatsCount * ticketPrice;
-
-  //Save booked seat into the currentSeatStatus
-  const seatIndex = [...bookedSeat].map((seat) => [...allSeats].indexOf(seat));
-  currentSeatStatus[movieSelect.selectedIndex].booked = [...seatIndex];
-
-  //update booked property of the selected movie in currentSeatStatus
-  receipt();
-};
-
-const receipt = () => {
-  // let receipt = document.querySelector(".ticketsSummary");
-  let receiptText = null;
-
-  //generate each line on the receipt, displayed in the screen
-  currentSeatStatus.forEach((movie) => {
-    if (movie.booked.length > 0) {
-      receiptText += `<li> <strong>${movie.name} </strong>${
-        movie.booked.length
-      } * ${movie.price} = ${movie.booked.length * movie.price} $</li>`;
-    }
-  });
-
-  // Calculate total cost of the tickets.
-  let total = currentSeatStatus.reduce((total, movie) => {
-    movie.booked.length > 0
-      ? (total += +movie.price * movie.booked.length)
-      : total;
-    return total;
-  }, 0);
-
-  //update last line of the receipt, total cost
-  receiptText += `<li> TOTAL Cost = ${total} $</li>`;
-
-  // display receipt in the screen, attached to the <ul> via innerHMTL tag
-  document.querySelector(".ticketsSummary").innerHTML = receiptText;
-};
-
 const seatSelectHandler = (event) => {
   if (
     event.target.classList.contains("seat") &&
@@ -84,6 +35,79 @@ const seatSelectHandler = (event) => {
   }
 
   updateSelectedCount();
+};
+
+// Save selected seat on localStorage,
+const updateSelectedCount = () => {
+  const bookedSeat = document.querySelectorAll(".row .seat.booked");
+  const selectedSeatsCount = +bookedSeat.length;
+
+  //Save booked seat into the currentSeatStatus
+  const seatIndex = [...bookedSeat].map((seat) => [...allSeats].indexOf(seat));
+  currentSeatStatus[movieSelect.selectedIndex].booked = [...seatIndex];
+
+  //saved on the localStorage
+  localStorage.setItem("currentSeatStatus", JSON.stringify(currentSeatStatus));
+
+  //update booked property of the selected movie in currentSeatStatus
+  calculateReceipt();
+};
+
+const calculateReceipt = () => {
+  //final HTML lookalike string passed for display on the screendisplayed in the screen
+  let receiptText = null;
+
+  //generate each line on the receipt based on booked ticker for each movie unequal to 0, generate an <li> for each movie
+  currentSeatStatus.forEach((movie) => {
+    if (movie.booked.length > 0) {
+      receiptText += `<li> <strong>${movie.name} </strong>${
+        movie.booked.length
+      } * ${movie.price} = ${movie.booked.length * movie.price} $</li>`;
+    }
+  });
+
+  // Calculate total cost of the tickets.
+  let totalCost = currentSeatStatus.reduce((total, movie) => {
+    movie.booked.length > 0
+      ? (total += +movie.price * movie.booked.length)
+      : total;
+    return total;
+  }, 0);
+
+  // calculate Tickets Qty
+  let totalTickets = currentSeatStatus.reduce((total, movie) => {
+    movie.booked.length > 0 ? (total += movie.booked.length) : total;
+    return total;
+  }, 0);
+
+  //Update the Summary line at the end of the page:
+  count.innerText = totalTickets;
+  total.innerText = totalCost;
+
+  //update last line of the receipt, total cost
+  totalCost > 0
+    ? (receiptText += `<li> TOTAL Cost = ${totalCost} $</li>`)
+    : null;
+
+  // display receipt in the screen, attached to the <ul> via innerHMTL tag
+  displayOnScreen(receiptText);
+};
+
+const displayOnScreen = (text) => {
+  document.querySelector(".ticketsSummary").innerHTML = text;
+};
+
+const changeMovieHandler = (event) => {
+  ticketPrice = +event.target.value;
+  updateSeats();
+  updateSelectedCount();
+};
+
+const updateSeats = () => {
+  //movieSelect.selectedIndex return selected movie index
+
+  movieIndex = movieSelect.selectedIndex;
+  updateUI();
 };
 
 //change CSS class of the reseved seat, based on the selected movie
@@ -109,25 +133,9 @@ const updateUI = () => {
   });
 };
 
-const updateSeats = () => {
-  //movieSelect.selectedIndex return selected movie index
-
-  movieIndex = movieSelect.selectedIndex;
-  updateUI();
-};
-
-const changeMovieHandler = (event) => {
-  ticketPrice = +event.target.value;
-  updateSeats();
-  updateSelectedCount();
-};
-
 // seat select event
 container.addEventListener("click", seatSelectHandler);
 
 //movie select event
 movieSelect.addEventListener("change", changeMovieHandler.bind(event));
 document.addEventListener("onload", updateSeats());
-
-// movieSelect.options[0].innerHTML
-// sample.substring(0, sample.indexOf("(")).trim()
