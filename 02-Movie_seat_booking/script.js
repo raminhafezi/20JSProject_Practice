@@ -2,8 +2,8 @@ const container = document.querySelector(".container");
 const allSeats = document.querySelectorAll(".row .seat");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
-let ticketPrice = +movieSelect.value;
 let movieIndex = movieSelect.selectedIndex;
+let ticketPrice = +movieSelect.value;
 
 let currentSeatStatus = [
   {

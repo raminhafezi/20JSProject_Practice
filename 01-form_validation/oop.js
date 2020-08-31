@@ -157,7 +157,7 @@ class User {
   }
   static greeting = () => {
     console.log(
-      `Hello Mr/Mrs ${this.data.sername}, I've got your email as ${this.data.email}, please keep your credential ${this.data.password} on a safe place.`
+      `Hello Mr/Mrs ${this.data.sername}, I've got your email as ${this.data.email}, please keep your credential ${this.data.password} in a safe place.`
     );
   };
 }
