@@ -29,6 +29,7 @@ class UpdateUi {
   };
 
   updateBookedSeatCscClass = (event) => {
+    console.log(event);
     if (
       event.target.classList.contains("seat") &&
       !event.target.classList.contains("reserved")
