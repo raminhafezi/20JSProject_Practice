@@ -9,7 +9,7 @@ export namespace Components {
     interface RahaTicketBooking {
         "columns": number;
         "currentSeatPosition": object;
-        "defaultSeatsPosition": Array<Object>;
+        "defaultSeatsPosition": { name: string; price: number; reserved: number[]; booked: any[]; }[];
         "rows": number;
     }
 }
@@ -28,7 +28,8 @@ declare namespace LocalJSX {
     interface RahaTicketBooking {
         "columns"?: number;
         "currentSeatPosition"?: object;
-        "defaultSeatsPosition"?: Array<Object>;
+        "defaultSeatsPosition"?: { name: string; price: number; reserved: number[]; booked: any[]; }[];
+        "onBookingConfirm"?: (event: CustomEvent<any>) => void;
         "rows"?: number;
     }
     interface IntrinsicElements {

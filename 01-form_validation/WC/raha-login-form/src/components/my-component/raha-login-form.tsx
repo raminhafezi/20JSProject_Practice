@@ -149,7 +149,7 @@ export class MyComponent {
     }
   }
 
-  formSublit(event: Event) {
+  formSubmit(event: Event) {
     event.preventDefault();
     let loginObject = { username: this.userNameValue, email: this.emailValue, password: this.passwordValue };
     // console.log('Clicked!!!!');
@@ -159,7 +159,7 @@ export class MyComponent {
   render() {
     return [
       <div class="container">
-        <form id="form" class="form" onSubmit={this.formSublit.bind(this)}>
+        <form id="form" class="form" onSubmit={this.formSubmit.bind(this)}>
           <h2>{this.formTitle}</h2>
           <div class="form-control">
             <label id="username">Username</label>
