@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface RahaTicketBooking {
         "columns": number;
+        "currentSeatPosition": object;
+        "defaultSeatsPosition": Array<Object>;
         "rows": number;
     }
 }
@@ -25,6 +27,8 @@ declare global {
 declare namespace LocalJSX {
     interface RahaTicketBooking {
         "columns"?: number;
+        "currentSeatPosition"?: object;
+        "defaultSeatsPosition"?: Array<Object>;
         "rows"?: number;
     }
     interface IntrinsicElements {
