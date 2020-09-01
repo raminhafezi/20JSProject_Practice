@@ -95,6 +95,37 @@ export class MyComponent {
     this.updateUI();
   }
 
+  calculateReceipt() {
+    let receiptText = '';
+    //generate each line on the receipt based on currentSeatState.movieIndex.booked if length > 0, generate an <li> for each movie.
+    let currentSeatPositionArray = Object.entries(this.currentSeatPosition);
+    currentSeatPositionArray.forEach(el => {
+      if (el[1].booked.length > 0) {
+        receiptText += `<li> <strong> ${el[1].name} </strong>${el[1].booked.length} * ${el[1].price} = ${el[1].booked.length * el[1].price}</li>`;
+      }
+    });
+
+    // Calculate total cost of the tickets.
+    this.total = currentSeatPositionArray.reduce((total, el) => {
+      el[1].booked.length > 0 ? (total += +el[1].price * el[1].booked.length) : total;
+      return total;
+    }, 0);
+
+    // calculate Tickets Qty
+    this.count = currentSeatPositionArray.reduce((total, el) => {
+      el[1].booked.length > 0 ? (total += el[1].booked.length) : total;
+      return total;
+    }, 0);
+
+    //update last line of the receipt, total cost
+    this.total > 0 ? (receiptText += `<li> TOTAL Cost = ${this.total} $</li>`) : null;
+    this.displayOnScreen(receiptText);
+  }
+
+  displayOnScreen(receipt) {
+    this.screen.innerHTML = receipt;
+  }
+
   //Generate Seat Formation and passed as JSX to display on render method.
   @Watch('rows')
   @Watch('columns')
@@ -111,58 +142,25 @@ export class MyComponent {
     return rowList;
   }
 
-  calculateReceipt() {
-    let receiptText = '';
-
-    //generate each line on the receipt based on currentSeatState.movieIndex.booked if length > 0, generate an <li> for each movie.
-    let newArr = Object.entries(this.currentSeatPosition);
-    newArr.forEach(el => {
-      if (el[1].booked.length > 0) {
-        receiptText += `<li> <strong> ${el[1].name} </strong>${el[1].booked.length} * ${el[1].price} = ${el[1].booked.length * el[1].price}</li>`;
-      }
+  //Generate Movie Drop Down based on name and price
+  private generateMovieDropDown() {
+    let option = [];
+    let arr = Object.entries(this.currentSeatPosition);
+    arr.forEach(el => {
+      option.push(
+        <option>
+          {el[1].name} <strong>({el[1].price}$)</strong>
+        </option>,
+      );
     });
-    // Calculate total cost of the tickets.
-    this.total = newArr.reduce((total, el) => {
-      el[1].booked.length > 0 ? (total += +el[1].price * el[1].booked.length) : total;
-      return total;
-    }, 0);
-
-    // calculate Tickets Qty
-    this.count = newArr.reduce((total, el) => {
-      el[1].booked.length > 0 ? (total += el[1].booked.length) : total;
-      return total;
-    }, 0);
-
-    //Update the Summary line at the end of the page:
-    // this.count = this.count;
-    // this.total = this.total;
-
-    //update last line of the receipt, total cost
-    this.total > 0 ? (receiptText += `<li> TOTAL Cost = ${this.total} $</li>`) : null;
-    this.displayOnScreen(receiptText);
+    return option;
   }
-
-  displayOnScreen(receipt) {
-    this.screen.innerHTML = receipt;
-  }
-
   render() {
     return [
       <div class="movie-container">
         <label> Pick a Movie</label>
         <select name="movie" id="movie" onChange={event => this.movieChangeandler(event)}>
-          <option>
-            Avengers: Endgame <strong> (10$)</strong>
-          </option>
-          <option>
-            Joker <strong>(12$)</strong>
-          </option>
-          <option>
-            Toy Story 4 <strong> (8$)</strong>
-          </option>
-          <option>
-            The Lion King <strong> ($9)</strong>
-          </option>
+          {this.generateMovieDropDown()}
         </select>
       </div>,
       <ul class="showcase">
@@ -192,7 +190,7 @@ export class MyComponent {
         {this.generateSeatPosition()}
       </div>,
       <p class="text">
-        You Select <span id="count"> {this.count}</span> seats for the price of
+        You Select <span id="count"> {this.count}</span> seats for the TOTAL price of
         <span id="total"> {this.total} </span>$
       </p>,
     ];
