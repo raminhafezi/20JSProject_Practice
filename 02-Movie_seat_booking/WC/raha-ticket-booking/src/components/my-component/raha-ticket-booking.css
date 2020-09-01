@@ -8,11 +8,11 @@
 :host {
   --background-color: #242333;
   --seat-reserved-color: whitesmoke;
-  --seat-booked-color:  #6feaf6; 
+  --seat-booked-color: #6feaf6;
   --show-case-bg-color: rgba(0, 0, 0, 0.1);
   --screen-bg-color: rgb(205 203 203);
   --cancel-btn-color: rgb(201 79 79);
-  --confirm-btn-color:  rgb(28, 184, 65);
+  --confirm-btn-color: rgb(28, 184, 65);
   background-color: var(--background-color, lightgrey);
   display: flex;
   flex-direction: column;
@@ -30,7 +30,6 @@
 
 .movie-container select {
   background: var(--seat-reserved-color, white);
-  --seat-booked: 
   border: 0;
   border-radius: 5px;
   font-size: 14px;
@@ -56,7 +55,7 @@
 }
 
 .seat.booked {
-  background:var(--seat-booked-color, lightblue);
+  background: var(--seat-booked-color, lightblue);
 }
 
 .seat.reserved {
@@ -153,9 +152,9 @@ p.text span {
 }
 
 .button.success {
-  background:var(--confirm-btn-color, lightgreen);
+  background: var(--confirm-btn-color, lightgreen);
 }
 
 .button.error {
-  background: var(--cancel-btn-color, red)
+  background: var(--cancel-btn-color, red);
 }
