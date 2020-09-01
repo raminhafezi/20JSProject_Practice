@@ -101,7 +101,7 @@ export class MyComponent {
     let currentSeatPositionArray = Object.entries(this.currentSeatPosition);
     currentSeatPositionArray.forEach(el => {
       if (el[1].booked.length > 0) {
-        receiptText += `<li> <strong> ${el[1].name} </strong>${el[1].booked.length} * ${el[1].price} = ${el[1].booked.length * el[1].price}</li>`;
+        receiptText += `<li> <strong> ${el[1].name}, </strong>${el[1].booked.length} * ${el[1].price}$ = ${el[1].booked.length * el[1].price}$</li>`;
       }
     });
 
