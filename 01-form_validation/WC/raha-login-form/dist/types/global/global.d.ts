@@ -1,0 +1,20 @@
+export declare const FORM_TITLE = "Register With Us";
+export declare const MIN_USERNAME_LENGTH = 5;
+export declare const MIN_PASS_STRONG = 10;
+export declare const MIN_PASS_ACCEPTABLE = 6;
+export declare const CHECK_EMAIL_RE: RegExp;
+export declare const STRONG_PASS: RegExp;
+export declare const MEDIUM_PASS: RegExp;
+export declare const USERNAME: RegExp;
+export declare const MSG: {
+    PASSWORD_CHECK_ERROR_MSG: string;
+    PASSWORD_CHECK_SUCCESS_MSG: string;
+    PASSWORD_LENGTH_ERROR_MSG: string;
+    USERNAME_MIN_LENGTH_MSG: string;
+    PASSWORD_MATCH_ERROR_MSG: string;
+    PASSWORD_MATCH_SUCCESS_MSG: string;
+    EMAIL_CHECK_ERROR_MSG: string;
+    EMAIL_CHECK_PASS_MSG: string;
+    USERNAME_CHECK_ERROR_MSG: string;
+    USERNAME_CHECK_PASS_MSG: string;
+};
