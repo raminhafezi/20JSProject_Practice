@@ -101,6 +101,7 @@ export class MyComponent {
     //generate each line on the receipt based on currentSeatState.movieIndex.booked if length > 0, generate an <li> for each movie. Object.entries makes an array from an Object, so we can user forEach()
     let currentSeatPositionArray = Object.entries(this.currentSeatPosition);
     currentSeatPositionArray.forEach(el => {
+      let {} = el[1];
       if (el[1].booked.length > 0) {
         receiptText += `<li> <strong> ${el[1].name}, </strong>${el[1].booked.length} * ${el[1].price}$ = ${el[1].booked.length * el[1].price}$</li>`;
       }
