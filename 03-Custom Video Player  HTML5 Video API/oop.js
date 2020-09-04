@@ -1,28 +1,8 @@
 class UI {
   constructor() {
-    this.controls = null;
     const videoPlayPause = document.getElementById("videoPlayPause");
     const timeStamp = document.getElementById("timeStamp");
     const totalTime = document.getElementById("totalTime");
-    this.addEventListener();
-  }
-
-  addEventListener() {
-    let controls = document.querySelector(".controls");
-    controls.addEventListener("mouseover", this.mouseOverControls.bind(this));
-    controls.addEventListener("mouseout", () => {
-      this.hide("slow", "swing");
-    });
-  }
-
-  mouseOverControls() {
-    console.log("mouse over controls Area");
-  }
-
-  mouseOutControls() {
-    let controls = document.querySelector(".controls");
-    controls.hide("slow", "swing");
-    console.log("mouse Out");
   }
 
   playPauseIconToggle() {
@@ -63,7 +43,6 @@ class App extends UI {
     videoPlayPause.addEventListener("click", this.playPauseToggle.bind(this));
     progress.addEventListener("change", this.setVideoProgress.bind(this));
     video.addEventListener("timeupdate", this.updateProgress.bind(this));
-    // document.addEventListener("DOMContentLoaded", () => this.keyPress());
     document.addEventListener("keydown", this.keyPress.bind(event));
   };
 
@@ -118,8 +97,7 @@ class App extends UI {
         break;
 
       default:
-        console.log("neh");
-        break;
+        return;
     }
   };
 }
