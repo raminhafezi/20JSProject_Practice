@@ -43,7 +43,7 @@ export class rahaCustomPlayer {
           </i>
         </button>
         <button class="btn" id="stop">
-          <i id="videoReset" class="fas fa-stop"></i>
+          <i id="videoReset" class="stop"></i>
           <i class="stop">&#x025FC;</i>
         </button>
         <input type="range" class="progress" id="progress" min="0" max="100" step="0.1" value="0" onChange={this.testMe.bind(this)} />
