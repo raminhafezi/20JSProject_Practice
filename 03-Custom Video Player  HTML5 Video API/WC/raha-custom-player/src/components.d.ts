@@ -6,19 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface IconsFontawesome {
-    }
     interface RahaCustomPlayer {
         "videoSrc": string;
     }
 }
 declare global {
-    interface HTMLIconsFontawesomeElement extends Components.IconsFontawesome, HTMLStencilElement {
-    }
-    var HTMLIconsFontawesomeElement: {
-        prototype: HTMLIconsFontawesomeElement;
-        new (): HTMLIconsFontawesomeElement;
-    };
     interface HTMLRahaCustomPlayerElement extends Components.RahaCustomPlayer, HTMLStencilElement {
     }
     var HTMLRahaCustomPlayerElement: {
@@ -26,18 +18,14 @@ declare global {
         new (): HTMLRahaCustomPlayerElement;
     };
     interface HTMLElementTagNameMap {
-        "icons-fontawesome": HTMLIconsFontawesomeElement;
         "raha-custom-player": HTMLRahaCustomPlayerElement;
     }
 }
 declare namespace LocalJSX {
-    interface IconsFontawesome {
-    }
     interface RahaCustomPlayer {
         "videoSrc"?: string;
     }
     interface IntrinsicElements {
-        "icons-fontawesome": IconsFontawesome;
         "raha-custom-player": RahaCustomPlayer;
     }
 }
@@ -45,7 +33,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "icons-fontawesome": LocalJSX.IconsFontawesome & JSXBase.HTMLAttributes<HTMLIconsFontawesomeElement>;
             "raha-custom-player": LocalJSX.RahaCustomPlayer & JSXBase.HTMLAttributes<HTMLRahaCustomPlayerElement>;
         }
     }

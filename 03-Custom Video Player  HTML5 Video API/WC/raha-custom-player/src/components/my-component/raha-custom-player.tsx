@@ -11,8 +11,9 @@ import { Component, h, Prop, State } from '@stencil/core';
 export class rahaCustomPlayer {
   constructor() {}
   @Prop({ mutable: true, reflect: true }) videoSrc: string = './assets/media/videos/sample.mp4';
-  @State() videoDuration = 0;
-  @State() totalVideoTime = 12;
+  @State() videoDuration: string = '0';
+  @State() totalVideoTime: number = 12;
+  displayTotalVideo: HTMLElement;
   VideoTime: HTMLElement;
   videoObj: HTMLMediaElement;
 
@@ -22,14 +23,16 @@ export class rahaCustomPlayer {
 
   componentDidLoad() {
     console.log(` Video Duration: ${this.videoObj.duration}`);
-    this.VideoTime.innerHTML = '12:00';
+    this.totalVideoTime = this.videoObj.duration;
+    this.displayTotalVideo.innerHTML = '12:45';
   }
 
   updateVideoPassedTime() {
-    let s = Math.floor(this.totalVideoTime % 60);
-    s = s < 10 ? '0' + s : s;
-    let m = Math.floor((this.totalVideoTime / 60) % 60);
-    m = m < 10 ? '0' + m : m;
+    let s = Math.floor(this.videoObj.duration % 60);
+    let seconds = s < 10 ? '0' + s : '' + s;
+    let m = Math.floor((this.videoObj.duration / 60) % 60);
+    let minutes = m < 10 ? '0' + m : m;
+    console.log(`minutes: ${minutes} seconds: ${seconds}`);
   }
 
   render() {
@@ -52,7 +55,7 @@ export class rahaCustomPlayer {
         </span>
         <span>/</span>
         <span class="timeStamp" id="totalTime" ref={el => (this.VideoTime = el)}>
-          {this.totalVideoTime}
+          {this.displayTotalVideo}
         </span>
       </div>,
     ];
