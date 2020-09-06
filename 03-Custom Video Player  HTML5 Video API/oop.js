@@ -88,12 +88,9 @@ class App extends UI {
         break;
       case ">":
         video.playbackRate > 8 ? null : (video.playbackRate += 0.2);
-        console.log(video.playbackRate);
-        console.log(video.playbackRate);
         break;
       case "<":
         video.playbackRate <= -0.8 ? null : (video.playbackRate -= 0.2);
-        console.log(video.playbackRate);
         break;
 
       default:

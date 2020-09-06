@@ -12,8 +12,7 @@ export class rahaCustomPlayer {
   constructor() {}
   @Prop({ mutable: true, reflect: true }) videoSrc: string = './assets/media/videos/sample.mp4';
   @State() videoDuration: string = '0';
-  @State() totalVideoTime: number = 12;
-  displayTotalVideo: HTMLElement;
+
   VideoTime: HTMLElement;
   videoObj: HTMLMediaElement;
 
@@ -21,12 +20,24 @@ export class rahaCustomPlayer {
     console.log('test passed');
   }
 
+  // update total video time and display on the screen by setting innerHTML
   componentDidLoad() {
-    console.log(` Video Duration: ${this.videoObj.duration}`);
-    this.totalVideoTime = this.videoObj.duration;
-    this.displayTotalVideo.innerHTML = '12:45';
+    let totalVideoTime = (this.videoObj.duration / 60).toFixed(2);
+    console.log(totalVideoTime);
+    this.VideoTime.innerHTML = '' + totalVideoTime;
   }
 
+  // implement video play and pasue click
+
+  // implement video stop button and reset the progress bar
+
+  // implement volume up and down with arrow-up/down
+
+  // implement video playrate change with shift+> and shift+<
+
+  // Implement video current time forward and backward 2 sec with left and right arrow
+
+  // update video progress bar and update passed time on the screen
   updateVideoPassedTime() {
     let s = Math.floor(this.videoObj.duration % 60);
     let seconds = s < 10 ? '0' + s : '' + s;
@@ -54,9 +65,7 @@ export class rahaCustomPlayer {
           {this.videoDuration}
         </span>
         <span>/</span>
-        <span class="timeStamp" id="totalTime" ref={el => (this.VideoTime = el)}>
-          {this.displayTotalVideo}
-        </span>
+        <span class="timeStamp" id="totalTime" ref={el => (this.VideoTime = el)}></span>
       </div>,
     ];
   }
