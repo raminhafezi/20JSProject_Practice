@@ -32,7 +32,6 @@ class App extends UI {
     super();
     const video = document.getElementById("video");
     const videoPlayPause = document.getElementById("videoPlayPause");
-    const stopBtn = document.getElementById("stop");
     const progress = document.getElementById("progress");
     this.addEventListener();
     this.updateTotalTime(video);
@@ -41,6 +40,8 @@ class App extends UI {
   addEventListener = () => {
     video.addEventListener("click", this.playPauseToggle.bind(this));
     videoPlayPause.addEventListener("click", this.playPauseToggle.bind(this));
+    const stopBtn = document.getElementById("stop");
+    stopBtn.addEventListener("click", this.stopVideo.bind(this));
     progress.addEventListener("change", this.setVideoProgress.bind(this));
     video.addEventListener("timeupdate", this.updateProgress.bind(this));
     document.addEventListener("keydown", this.keyPress.bind(event));
@@ -49,6 +50,11 @@ class App extends UI {
   playPauseToggle() {
     video.paused ? video.play() : video.pause();
     this.playPauseIconToggle();
+  }
+
+  stopVideo() {
+    video.pause();
+    video.currentTime = 0;
   }
 
   setVideoProgress = () => {

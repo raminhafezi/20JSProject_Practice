@@ -12,9 +12,10 @@ export class rahaCustomPlayer {
   constructor() {}
   @Prop({ mutable: true, reflect: true }) videoSrc: string = './assets/media/videos/sample.mp4';
   @State() videoDuration: string = '0';
-
+  playPauseIcons: HTMLElement;
   VideoTime: HTMLElement;
   videoObj: HTMLMediaElement;
+  stopBtn: HTMLImageElement;
 
   private testMe() {
     console.log('test passed');
@@ -25,11 +26,35 @@ export class rahaCustomPlayer {
     let totalVideoTime = (this.videoObj.duration / 60).toFixed(2);
     console.log(totalVideoTime);
     this.VideoTime.innerHTML = '' + totalVideoTime;
+
+    // put video play icon
+    // this.playPauseIcons.innerHTML = '▶️';
+    this.playPauseIcons.setAttribute('src', '../assets/media/images/icon_images/play-button.png');
+    this.playPauseIcons.setAttribute('play', '');
   }
 
-  // implement video play and pasue click
+  // implement video play and pasue click and update icon
+  videoPlayPause() {
+    // Check this link and replace code in here https://css-tricks.com/making-pure-css-playpause-button/
+    if (this.videoObj.paused) {
+      this.playPauseIcons.setAttribute('src', '../assets/media/images/icon_images/pause-button.png');
+      this.playPauseIcons.setAttribute('pause', '');
+      this.videoObj.play();
+    } else {
+      this.playPauseIcons.setAttribute('src', '../assets/media/images/icon_images/play-button.png');
+      this.playPauseIcons.setAttribute('play', '');
+      this.videoObj.pause();
+    }
+    this.stopBtn.setAttribute('src', '../assets/media/images/icon_images/stop-button-active.png');
+  }
 
   // implement video stop button and reset the progress bar
+  videoReset() {
+    this.videoObj.pause();
+    this.videoObj.currentTime = 0;
+    this.stopBtn.setAttribute('src', '../assets/media/images/icon_images/stop-button-in-active.png');
+    console.log('You Reset Playing this video');
+  }
 
   // implement volume up and down with arrow-up/down
 
@@ -52,13 +77,22 @@ export class rahaCustomPlayer {
       <video src={this.videoSrc} id="video" class="screen" poster="media/imgs/poster.png" autoPlay loop ref={el => (this.videoObj = el)}></video>,
       <div class="controls">
         <button class="btn" id="play">
-          <i id="videoPlayPause" class="play">
-            &#x25b6;
-          </i>
+          <img
+            id="videoPlayPause"
+            class="play"
+            src="../assets/media/images/icon_images/play-button.png"
+            onClick={this.videoPlayPause.bind(this)}
+            ref={el => (this.playPauseIcons = el)}
+          ></img>
         </button>
         <button class="btn" id="stop">
-          <i id="videoReset" class="stop"></i>
-          <i class="stop">&#x025FC;</i>
+          <img
+            id="videoReset"
+            class="stop"
+            src="../assets/media/images/icon_images/stop-button-active.png"
+            ref={el => (this.stopBtn = el)}
+            onClick={this.videoReset.bind(this)}
+          ></img>
         </button>
         <input type="range" class="progress" id="progress" min="0" max="100" step="0.1" value="0" onChange={this.testMe.bind(this)} />
         <span class="timeStamp" id="timeStamp">
