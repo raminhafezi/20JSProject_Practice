@@ -1,6 +1,5 @@
 class App {
   constructor() {
-    // this.elements();
     this.currencyEl_one = document.getElementById("currency-one");
     this.amount_one = document.getElementById("amount-one");
     this.currencyEl_two = document.getElementById("currency-two");
