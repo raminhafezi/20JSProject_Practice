@@ -7,8 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface RahaExchangeRate {
-        "amountOne": any;
-        "amountTwo": any;
+        "exchangeText": string;
         "image": string;
     }
 }
@@ -25,8 +24,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface RahaExchangeRate {
-        "amountOne"?: any;
-        "amountTwo"?: any;
+        "exchangeText"?: string;
         "image"?: string;
     }
     interface IntrinsicElements {
