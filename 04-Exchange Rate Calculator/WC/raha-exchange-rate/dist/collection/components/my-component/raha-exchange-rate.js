@@ -7,6 +7,7 @@ export class MyComponent {
     this.currenyTwoSymbol = 'USD';
     this.amountOneValue = '1';
     this.amountTwoValue = '0';
+    this.whoChanged = 1;
     this.exchangeText = '';
     //Catch raise event from child under Container parent.
     this.stateUpdate = e => {
@@ -135,24 +136,6 @@ export class MyComponent {
       "attribute": "image",
       "reflect": false,
       "defaultValue": "'money.png'"
-    },
-    "exchangeText": {
-      "type": "string",
-      "mutable": false,
-      "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
-      },
-      "required": false,
-      "optional": false,
-      "docs": {
-        "tags": [],
-        "text": ""
-      },
-      "attribute": "exchange-text",
-      "reflect": false,
-      "defaultValue": "''"
     }
   }; }
   static get states() { return {
@@ -161,7 +144,8 @@ export class MyComponent {
     "rate": {},
     "amountOneValue": {},
     "amountTwoValue": {},
-    "whoChanged": {}
+    "whoChanged": {},
+    "exchangeText": {}
   }; }
   static get watchers() { return [{
       "propName": "currenyOneSymbol",

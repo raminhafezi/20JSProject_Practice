@@ -14,8 +14,8 @@ export class MyComponent {
   @State() rate: number;
   @State() amountOneValue = '1';
   @State() amountTwoValue = '0';
-  @State() whoChanged: number;
-  @Prop() exchangeText: string = '';
+  @State() whoChanged: number = 1;
+  @State() exchangeText: string = '';
   exchangeRate: HTMLDivElement;
   inputOne: HTMLInputElement;
   inputTwo: HTMLInputElement;

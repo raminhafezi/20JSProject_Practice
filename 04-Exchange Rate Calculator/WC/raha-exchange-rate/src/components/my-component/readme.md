@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default       |
-| -------------- | --------------- | ----------- | -------- | ------------- |
-| `exchangeText` | `exchange-text` |             | `string` | `''`          |
-| `image`        | `image`         |             | `string` | `'money.png'` |
+| Property | Attribute | Description | Type     | Default       |
+| -------- | --------- | ----------- | -------- | ------------- |
+| `image`  | `image`   |             | `string` | `'money.png'` |
 
 
 ----------------------------------------------

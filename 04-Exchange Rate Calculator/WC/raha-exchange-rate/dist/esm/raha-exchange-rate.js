@@ -13,5 +13,5 @@ const patchBrowser = () => {
 };
 
 patchBrowser().then(options => {
-  return bootstrapLazy([["raha-exchange-rate",[[1,"raha-exchange-rate",{"image":[1],"exchangeText":[1,"exchange-text"],"currenyOneSymbol":[32],"currenyTwoSymbol":[32],"rate":[32],"amountOneValue":[32],"amountTwoValue":[32],"whoChanged":[32]}]]]], options);
+  return bootstrapLazy([["raha-exchange-rate",[[1,"raha-exchange-rate",{"image":[1],"currenyOneSymbol":[32],"currenyTwoSymbol":[32],"rate":[32],"amountOneValue":[32],"amountTwoValue":[32],"whoChanged":[32],"exchangeText":[32]}]]]], options);
 });
