@@ -9,7 +9,7 @@ export class MyComponent {
   @State() data = [];
   main: HTMLElement;
 
-  getRandomUser = () => {
+  private getRandomUser = () => {
     fetch('https://randomuser.me/api')
       .then(res => res.json())
       .then(resp => {
