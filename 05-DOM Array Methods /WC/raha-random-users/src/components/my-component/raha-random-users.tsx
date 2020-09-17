@@ -23,43 +23,42 @@ export class MyComponent {
       });
   };
 
-  private updateDOM() {
-    // console.log(this.data);
-    // let result = [];
+  private updateDOM(providedData = this.data) {
     this.main.innerHTML = '<h2>Person<strong>Wealth</strong></h2>';
-    this.data.forEach(person => {
+    providedData.forEach(person => {
       const element = document.createElement('div');
       element.classList.add('person');
-      element.innerHTML = `<strong>${person.name}</strong> $${this.numberWithCommas(person.money)}`;
-      // result.push(element);
+      element.innerHTML = `<strong id="record">${person.name}</strong> $${this.numberWithCommas(person.money)}`;
       this.main.appendChild(element);
     });
-    // console.log(result);
-    // return result;
   }
 
   //   double the wealth of each person in the list inplace.
-  doubleMoney = () => {
+  private doubleMoney = () => {
     this.data.forEach(person => (person.money += person.money));
     this.updateDOM();
   };
 
   //   filter out all non millioners from the list and replace the data
-  showMillionersOnly = () => {
+  private showMillionersOnly = () => {
     this.data = this.data.filter(person => person.money > 1000000);
     this.updateDOM();
   };
 
   //   Sort in ascending order, sort in place
-  sortData = () => {
+  private sortData = () => {
     this.data.sort((p1, p2) => {
       return p1.money > p2.money ? -100 : p1.money == p2.money ? 0 : 100;
     });
     this.updateDOM();
   };
 
-  //   calculate total welath of the people on data and display as in an h3 tag, at the end of the list
-  calculateTotalWelth = () => {
+  //  calculate total welath of the people on data and display as in an h3 tag, at the end of the list. First double check if we alreay calculate and print total wealth at the end of the list, in case user click on "calculate Total Welath" more than once
+  private calculateTotalWelth = () => {
+    let lastChild = this.main.lastChild;
+    if ((lastChild as HTMLDivElement).className != 'person') {
+      this.main.removeChild(lastChild);
+    }
     const total = this.data.reduce((total, person) => {
       return (total += person.money);
     }, 0);
@@ -68,7 +67,7 @@ export class MyComponent {
     this.main.appendChild(wealthEl);
   };
 
-  removeUser = event => {
+  private removeUser = event => {
     if (event.target.nodeName === 'STRONG') {
       this.data = this.data.filter(person => {
         return person.name !== event.target.innerHTML;
@@ -80,28 +79,43 @@ export class MyComponent {
   numberWithCommas = x => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+
+  // Experimental for removing all event listeners from tags and assign only one to the parent element with swtich-case
+  private catchRaisedEvent = e => {
+    switch (e.path[0].id) {
+      case 'add-user':
+        this.getRandomUser();
+        break;
+      case 'double':
+        this.doubleMoney();
+        break;
+      case 'show-millioners':
+        this.showMillionersOnly();
+        break;
+      case 'sort':
+        this.sortData();
+        break;
+      case 'calculate-wealth':
+        this.calculateTotalWelth();
+        break;
+      case 'record':
+        this.removeUser(e);
+        break;
+    }
+  };
+
   render() {
     return [
       <h1>Dom Array Methods</h1>,
-      <div class="container">
+      <div class="container" onClick={this.catchRaisedEvent.bind(event)}>
         <aside>
-          <button id="add-user" onClick={this.getRandomUser}>
-            Add User 🤗
-          </button>
-          <button id="double" onClick={this.doubleMoney}>
-            Double Money 💰
-          </button>
-          <button id="show-millioners" onClick={this.showMillionersOnly}>
-            Show Only Millioners💎
-          </button>
-          <button id="sort" onClick={this.sortData}>
-            Sort by Richest 😲
-          </button>
-          <button id="calculate-wealth" onClick={this.calculateTotalWelth}>
-            Calculate entire Wealth 👑
-          </button>
+          <button id="add-user">Add User 🤗</button>
+          <button id="double">Double Money 💰</button>
+          <button id="show-millioners">Show Only Millioners💎</button>
+          <button id="sort">Sort by Richest 😲</button>
+          <button id="calculate-wealth">Calculate entire Wealth 👑</button>
         </aside>
-        <main id="main" ref={el => (this.main = el)} onClick={this.removeUser}>
+        <main id="main" ref={el => (this.main = el)}>
           <h2>
             Person<strong>Wealth</strong>
           </h2>

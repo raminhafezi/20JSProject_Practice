@@ -86,8 +86,12 @@ class App extends DOMFunction {
     this.updateDOM();
   };
 
-  //   calculate total welath of the people on data and display as in an h3 tag, at the end of the list
+  // calculate total welath of the people on data and display as in an h3 tag, at the end of the list. First double check if we alreay calculate and print total wealth at the end of the list, in case user click on "calculate Total Welath" more than once
   calculateTotalWelth = () => {
+    let lastChild = this.main.lastChild;
+    if (lastChild.className != "person") {
+      this.main.removeChild(lastChild);
+    }
     const total = this.data.reduce((total, person) => {
       return (total += person.money);
     }, 0);
