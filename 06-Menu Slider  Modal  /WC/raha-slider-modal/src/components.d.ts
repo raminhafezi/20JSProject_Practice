@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface RahaSliderModal {
-        "links": string;
+        "navBarLinks": string;
         "sliderPic": { src: string; alt: string; };
     }
 }
@@ -24,7 +24,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface RahaSliderModal {
-        "links"?: string;
+        "navBarLinks"?: string;
         "sliderPic"?: { src: string; alt: string; };
     }
     interface IntrinsicElements {

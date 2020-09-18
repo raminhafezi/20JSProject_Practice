@@ -8,31 +8,31 @@ import { Component, h, Prop, Watch, State } from '@stencil/core';
 export class MyComponent {
   bodyEl: HTMLBodyElement;
   toggleBtn: HTMLButtonElement;
-  @Prop() links: string;
+  @Prop() navBarLinks: string;
   @State() SliderLinks: Object[];
 
   defaultNavItems = [
-    { name: 'Your Home', link: 'https://Googooli.mogoli.com' },
-    { name: 'Your Portfolio', link: 'https://Googooli.mogoli.com' },
-    { name: 'Your Blog', link: 'https://Googooli.mogoli.com' },
-    { name: 'Your Contact', link: 'https://Googooli.mogoli.com' },
+    { name: 'Your Home', link: 'https://google.com' },
+    { name: 'Your Portfolio', link: 'https://google.com' },
+    { name: 'Your Blog', link: 'https://google.com' },
+    { name: 'Your Contact', link: 'https://google.com' },
   ];
 
   @Prop({ mutable: true, reflect: true }) sliderPic = { src: 'https://randomuser.me/api/portraits/women/35.jpg', alt: 'user' };
 
-  @Watch('links')
+  @Watch('navBarLinks')
   SliderLinksWatcher(newValue: string) {
     const isBlank = typeof newValue !== 'string' || newValue === '';
     if (isBlank) {
       this.SliderLinks = this.defaultNavItems;
     } else {
-      this.SliderLinks = JSON.parse(this.links);
-      // console.log(typeof this.links);
+      this.SliderLinks = JSON.parse(newValue);
     }
   }
 
+  // Chceck if user pased nav bar links, if yes update the state
   componentWillLoad() {
-    this.SliderLinksWatcher(this.links);
+    this.SliderLinksWatcher(this.navBarLinks);
   }
   showNav() {
     this.bodyEl.classList.toggle('show-nav');
@@ -40,8 +40,6 @@ export class MyComponent {
   }
   sliderContent() {
     let links = [];
-    console.log(this.SliderLinks);
-
     this.SliderLinks.forEach(item => {
       links.push(
         <li>
