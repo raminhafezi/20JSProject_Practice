@@ -8,14 +8,14 @@ import { Component, h, Prop, Watch, State } from '@stencil/core';
 export class MyComponent {
   bodyEl: HTMLBodyElement;
   toggleBtn: HTMLButtonElement;
-  @Prop() navBarLinks: string;
+  @Prop() navBarLinks: string; // this translate to nav-bar-links when passed inside raha-slider-modal tag
   @State() SliderLinks: Object[];
 
   defaultNavItems = [
-    { name: 'Your Home', link: 'https://google.com' },
-    { name: 'Your Portfolio', link: 'https://google.com' },
-    { name: 'Your Blog', link: 'https://google.com' },
-    { name: 'Your Contact', link: 'https://google.com' },
+    { name: 'Your Home', link: 'https://www.google.com' },
+    { name: 'Your Portfolio', link: 'https://www.google.com' },
+    { name: 'Your Blog', link: 'https://www.google.com' },
+    { name: 'Your Contact', link: 'https://www.google.com' },
   ];
 
   @Prop({ mutable: true, reflect: true }) sliderPic = { src: 'https://randomuser.me/api/portraits/women/35.jpg', alt: 'user' };
