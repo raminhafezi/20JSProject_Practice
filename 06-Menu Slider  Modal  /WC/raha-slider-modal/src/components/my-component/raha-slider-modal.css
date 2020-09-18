@@ -1,21 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap");
-
-:root {
+:host {
   --modal-duration: 0.6s;
   --primary-color: #30336b;
   --secondary-color: #be2edd;
-}
-
-* {
   box-sizing: border-box;
+  font-family: 'latio', sans-serif;
+  padding: 0;
+  border: 0;
 }
 
 body {
-  font-family: "latio", sans-serif;
   margin: 0;
+  font-family: 'latio', sans-serif;
   transition: transform 0.3s ease;
 }
-
 body.show-nav {
   transform: translateX(200px);
 }
@@ -32,7 +29,10 @@ nav {
   z-index: 100;
   transform: translateX(-100%);
 }
-
+button span.toggle-icon {
+  background-color: white;
+  transform: rotate(180deg);
+}
 nav .logo {
   padding: 30px 0;
   text-align: center;
@@ -84,7 +84,7 @@ header p {
   margin: 30px 0;
 }
 button,
-input[type="submit"] {
+input[type='submit'] {
   background-color: var(--secondary-color);
   border: 0;
   border-radius: 5px;
@@ -98,10 +98,16 @@ button:focus {
 }
 
 .toggle {
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
   position: absolute;
   top: 20px;
   left: 20px;
+  font-size: x-large;
+  transition: transform 0.3s ease;
+}
+.toggle.open {
+  transition: transform 0.3s ease;
+  transform: rotate(1260deg);
 }
 
 .cta-btn {
